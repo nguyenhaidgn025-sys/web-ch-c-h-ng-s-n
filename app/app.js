@@ -1,0 +1,366 @@
+// hiển thi tên đăng nhập
+window.onload = function() {
+    const username = localStorage.getItem('username');
+    if (username) {
+        const display = document.getElementById('username-display');
+        if (display) display.innerText = `👤 ${username}`;
+    }
+}
+    // 1. Dữ liệu và Khởi tạo
+const products = [
+            { id: 1, name: 'Nem cá lăng', category: 'khai vi', price: 20000, description: 'Vỏ nem giòn, nhân cá đậm vị và thơm mùi tiêu', image: 'images/Nem cá lăng.jpg' },
+            { id: 2, name: 'Cá lăng trộn cay', category: 'khi vi', price: 225000, description: 'Có vị chua ngọt, thịt cá được chần chín tới cuốn cùng lá lốt, hành tây', image: 'images/Cá lăng trộn cay.jpg' },
+            { id: 3, name: 'Canh đầu cá nấu chua', category: 'mon chinh', price: 225000, description: 'Có vị chua thanh, ăn kèm giá đỗ và dọc mùng', image: 'images/Canh chua.jpg' },
+            { id: 4, name: 'Chả cá Lăng', category: 'mon chinh', price: 175000, description: 'Cá Lăng tinh tuyển từ 2 - 2.5kg, nướng than hoa, thịt mềm, ngọt', image: 'images/Chả cá đặc biệt.jpg' },
+            { id: 5, name: 'Nộm hoa chuối', category: 'khai vi', price: 95000, description: 'Có vị chua ngọt và giòn của hoa chuối', image: 'images/Nộm hoa chuối.jpg' },
+            { id: 6, name: 'Nộm rau má', category: 'khai vi', price: 145000, description: 'Có vị chua ngọt, ngăm ngăm đắng của rau má và vị ngậy của ruốc cá.', image: 'images/Nộm rau má ruốc cá lăng.jpg' },
+            { id: 7, name: 'Lạp xưởng cá Lăng', category: 'khai vi', price: 125000, description: 'Vỏ lạp xưởng giòn, bên trong có sụn giòn sần sật', image: 'images/Lạp xưởng cá Lăng.jpg' },
+            { id: 8, name: 'Gà popcorn lắc phô mai', category: 'menu', price: 95000, description: 'Viên gà giòn phủ lớp phô mai béo ngậy', image: 'images/Gà popcorn lắc phô mai.jpg' },
+            { id: 9, name: 'Khoai tây chiên', category: 'menu', price: 30000, image: 'images/Khoai tây chiên.jpg' },
+            { id: 10, name: 'Khoai tây chiên lắc phô mai', category: 'menu', price: 30000, image: 'images/Khoai tây chiên lắc phô mai.jpg' },
+            { id: 11, name: 'Ngô mỹ chiên bơ', category: 'menu', price: 30000, image: 'images/Ngô mỹ chiên bơ.jpg' },
+            { id: 12, name: 'Pizza bò bằm xúc xích', category: 'menu', price: 50000, description: 'Pizza nóng với toppings bò bằm và xúc xích, phô mai tan chảy', image: 'images/Pizza bò bằm xúc xích.jpg' },
+            { id: 13, name: 'Tortilla ruốc cá Lăng', category: 'menu', price: 85000, description: 'Bánh tortilla vàng giòn, vị phô mai chảy và vị ngậy đặc trưng của ruốc cá', image: 'images/Tortilla ruốc cá Lăng.jpg' },
+            { id: 14, name: 'Lòng cá Lăng', category: 'mon chinh', price: 145000, description: 'Giòn, thơm mùi tiêu xào', image: 'images/Lòng cá Lăng.jpg' },
+            { id: 15, name: 'Lẩu cá Lăng đặc biệt', category: 'lau', price: 445000, description: 'Nước lẩu chua thanh, có vị cay nhẹ giống lẩu Thái phục vụ kèm cá Lăng fille và sốt chấm làm từ rễ rau mùi đặc biệt', image: 'images/Lẩu cá Lăng đặc biệt.jpg' },
+            { id: 16, name: 'Lẩu đầu cá Lăng', category: 'lau', price: 315000, description: 'Nước lẩu chua thanh, có vị cay nhẹ giống lẩu Thái ăn kèm sốt chấm làm từ rễ rau mùi đặc biệt', image: 'images/Lẩu đầu cá Lăng đặc biệt.jpg' },
+            { id: 17, name: 'Lẩu cá Lăng', category: 'lau', price: 445000, description: 'Nước lẩu chua thanh, có vị cay nhẹ giống lẩu Thái phục vụ kèm cá Lăng fille và sốt chấm làm từ rễ rau mùi đặc biệt', image: 'images/Lẩu cá Lăng đặc biệt.jpg' },
+            { id: 18, name: 'Cháo cá Lăng', category: 'mon chinh', price: 135000, description: 'Có vị bùi ngậy của đỗ xanh và vị ngọt của cá Lăng', image: 'images/Cháo cá Lăng.jpg' },
+            { id: 19, name: 'Đầu cá Lăng om chuối đậu', category: 'mon chinh', price: 285000, description: 'Nước om sánh vàng của chuối đậu; nguyên liệu đều là đồ tươi dùng trong ngày', image: 'images/Đầu cá Lăng om chuối đậu.jpg' },
+            { id: 20, name: 'Trà vải', category: 'do uong', price: 45000, description: 'Trà vải thơm ngon, vị chua ngọt dịu', image: 'images/Trà vải.jpg' },
+            { id: 21, name: 'Trà thanh yên', category: 'do uong', price: 40000, description: 'Có vị chua ngọt dịu và vị thơm của mứt thanh yên', image: 'images/Trà thanh yên.jpg' },
+            { id: 22, name: 'Trà bí đao chanh ', category: 'do uong', price: 45000, description: 'Thức uống giải nhiệt, kết hợp giữa vị ngọt thanh của bí đao và vị chua thơm nhẹ của chanh vàng', image: 'images/Trà bí đao chanh.jpg' },
+            { id: 23, name: 'Nước ép dưa hấu', category: 'do uong', price: 30000, description: 'Nước ép dưa hấu tươi ngon, mát lạnh giải khát', image: 'images/Nước ép dưa hấu.jpg' },
+            { id: 24, name: 'Nước ép dứa', category: 'do uong', price: 30000, description: 'Nước ép dứa chua ngọt, giàu vitamin C', image: 'images/Nước ép dứa.jpg' },
+            { id: 25, name: 'Dasani', category: 'do uong', price: 30000, description: 'Nước tinh khiết Dasani, uống lạnh giải khát', image: 'images/Dasani.jpg' },
+            { id: 26, name: 'Coca cola', category: 'do uong', price: 30000, description: 'Coca cola lạnh, hương vị đặc trưng', image: 'images/Coca cola.jpg' },
+            { id: 27, name: 'Trà đào', category: 'do uong', price: 45000, description: 'Trà mía lá nếp mang đến thanh mát tự nhiên của mía và vị đậm của trà đen, vị quế thơm đặc trưng', image: 'images/Trà đào.jpg' },
+            { id: 28, name: 'Hoa quả theo mùa', category: 'trang mieng', price: 95000, description: 'Hoa quả tươi ngon theo mùa', image: 'images/Hoa quả theo mùa.jpg' },
+            { id: 29, name: 'Chè sương sáo', category: 'trang mieng', price: 95000, image: 'images/Chè sương sáo.jpg' },
+            { id: 30, name: 'Bia Hà Nội', category: 'do uong co con', price: 30000, image: 'images/Bia Hà Nội.jpg' },
+            { id: 31, name: 'Bia Sài Gòn', category: 'do uong co con', price: 35000, image: 'images/Bia Sài Gòn.jpg' },
+            { id: 32, name: 'Bia Heiniken', category: 'do uong co con', price: 30000, image: 'images/Bia Heiniken.jpg' },
+            { id: 33, name: 'Bia Trúc Bạch', category: 'do uong co con', price: 30000, image: 'images/Bia Trúc Bạch.jpg' },
+            { id: 34, name: 'Bia Tiger', category: 'do uong co con', price: 30000, image: 'images/Bia Tiger.jpg' },
+            { id: 35, name: 'Bia Tiger Bạc', category: 'do uong co con', price: 30000, image: 'images/Bia Tiger Bạc.jpg' },
+            { id: 36, name: 'Bún đậu', category: 'mon chinh', price: 30000, image: 'images/Bún đậu.jpg' },
+            { id: 37, name: 'Bún ốc', category: 'mon chinh', price: 30000, image: 'images/Bún ốc.jpg' },
+            { id: 38, name: 'Bún riêu', category: 'mon chinh', price: 30000, image: 'images/Bún riêu.jpg' },
+            { id: 39, name: 'Khoai tây chiên', category: 'menu', price: 30000, image: 'images/Khoai tây chiên.jpg' },
+            { id: 40, name: 'Khoai tây chiên lắc phô mai', category: 'menu', price: 30000, image: 'images/Khoai tây chiên lắc phô mai.jpg' },
+            { id: 41, name: 'Ngô mỹ chiên bơ', category: 'menu', price: 30000, image: 'images/Ngô mỹ chiên bơ.jpg' },
+            { id: 42, name: 'Pizza bò bằm xúc xích', category: 'menu', price: 50000, description: 'Pizza nóng với toppings bò bằm và xúc xích, phô mai tan chảy', image: 'images/Pizza bò bằm xúc xích.jpg' },
+            { id: 43, name: 'Combo 1', category: 'combo', price: 465000, description: 'Gồm 2 suất Chả cá Lăng + 1 suất lòng cá + 1 niêu cháo cá nhỏ', image: 'images/combo1.jpg' },
+            { id: 44, name: 'Combo 1 đặc biệt', category: 'combo', price: 565000, description: 'Gồm 2 suất chả cá Lăng đặc biệt + 1 suất lòng cá Lăng + 1 niêu cháo cá nhỏ', image: 'images/combo1.jpg' },
+];
+
+let cart = JSON.parse(localStorage.getItem('shopping_cart')) || [];
+
+// 2. Hàm Thông báo
+function showToast(message) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `✅ ${message}`;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+}
+
+// 3. Hàm Thêm vào giỏ (Có hiệu ứng bay + tăng số lượng)
+function addToCart(id, name, price) {
+    const product = products.find(p => p.id === id);
+    const existingItem = cart.find(item => item.id === id);
+
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({ id, name, price, quantity: 1 });
+    }
+
+    localStorage.setItem('shopping_cart', JSON.stringify(cart));
+    updateCartCount();
+    showToast(`Đã thêm ${name} vào giỏ`);
+
+    // Hiệu ứng bay
+    const btn = event.target;
+    const cartIcon = document.querySelector('.cart-icon');
+    const rect = btn.getBoundingClientRect();
+    
+    const flyer = document.createElement('img');
+    flyer.src = product ? product.image : ''; 
+    flyer.className = 'flying-item';
+    flyer.style.width = '60px';
+    flyer.style.height = '60px';
+    flyer.style.left = `${rect.left}px`;
+    flyer.style.top = `${rect.top}px`;
+    document.body.appendChild(flyer);
+
+    setTimeout(() => {
+        const cartRect = cartIcon.getBoundingClientRect();
+        flyer.style.left = `${cartRect.left}px`;
+        flyer.style.top = `${cartRect.top}px`;
+        flyer.style.width = '10px';
+        flyer.style.height = '10px';
+        flyer.style.opacity = '0';
+    }, 50);
+    setTimeout(() => flyer.remove(), 1200);
+}
+
+// 4. Hàm thay đổi số lượng trong Modal giỏ hàng
+function changeQuantity(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if (item) {
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            cart = cart.filter(i => i.id !== id);
+        }
+    }
+    localStorage.setItem('shopping_cart', JSON.stringify(cart));
+    renderCart();
+    updateCartCount();
+}
+
+// 5. Cập nhật con số trên icon giỏ hàng
+function updateCartCount() {
+    const total = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const badge = document.getElementById('cartCount');
+    if(badge) badge.textContent = total;
+}
+
+// 6. Hiển thị nội dung giỏ hàng
+function renderCart() {
+    const cartItems = document.getElementById('cartItems');
+    let total = 0;
+
+    if (cart.length === 0) {
+        cartItems.innerHTML = '<p style="text-align:center; padding:20px;">Giỏ hàng trống</p>';
+        document.getElementById('totalPrice').textContent = "Tổng: 0 VNĐ";
+        return;
+    }
+
+    cartItems.innerHTML = cart.map(item => {
+        total += item.price * item.quantity;
+        return `
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eee;">
+                <div>
+                    <b>${item.name}</b><br>
+                    <small>${item.price.toLocaleString()} VNĐ</small>
+                </div>
+                <div>
+                    <button onclick="changeQuantity(${item.id}, -1)">-</button>
+                    <span style="margin:0 10px">${item.quantity}</span>
+                    <button onclick="changeQuantity(${item.id}, 1)">+</button>
+                </div>
+            </div>`;
+    }).join('');
+    document.getElementById('totalPrice').textContent = `Tổng: ${total.toLocaleString()} VNĐ`;
+}
+
+// Các hàm đóng mở Modal 
+function openCart() {
+    renderCart();
+    document.getElementById('cartModal').classList.add('active');
+}
+function closeCart() {
+    document.getElementById('cartModal').classList.remove('active');
+}
+
+// Khởi tạo hiển thị
+function displayProducts() {
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = products.map(p => `
+        <div class="product-card">
+            <img src="${p.image}" class="product-image" onclick="showProductDetail(${p.id})" style="cursor:pointer">
+            <div class="product-info">
+                <div class="product-name">${p.name}</div>
+                ${p.description ? `<div class="product-description">${p.description}</div>` : ''}
+                <div class="product-price">${p.price.toLocaleString()} VNĐ</div>
+                <button class="btn-add-cart" onclick="addToCart(${p.id}, '${p.name}', ${p.price})">Thêm vào giỏ</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+displayProducts();
+updateCartCount();
+// Hàm Thanh Toán
+function checkout() {
+    if (cart.length === 0) {
+        showToast("Giỏ hàng trống!", "warning");
+        return;
+    }
+
+    // 1. Đổ dữ liệu vào danh sách món của hóa đơn
+    const invoiceList = document.getElementById('invoice-items-list');
+    let total = 0;
+    
+    invoiceList.innerHTML = cart.map(item => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+        return `
+            <tr>
+                <td style="padding: 5px 0;">${item.name}</td>
+                <td style="text-align: center;">${item.quantity}</td>
+                <td style="text-align: right;">${subtotal.toLocaleString()}</td>
+            </tr>
+        `;
+    }).join('');
+
+    // 2. Hiển thị tổng tiền và ngày tháng
+    document.getElementById('invoice-total-display').textContent = `TỔNG: ${total.toLocaleString()} VNĐ`;
+    document.getElementById('invoice-date').textContent = new Date().toLocaleString('vi-VN');
+
+    // 3. Hiện hóa đơn và đóng giỏ hàng
+    closeCart();
+    document.getElementById('invoice-modal').style.display = 'flex';
+
+    // 4. Xóa giỏ hàng
+    cart = [];
+    localStorage.removeItem('shopping_cart');
+    updateCartCount();
+}
+
+function closeInvoice() {
+    document.getElementById('invoice-modal').style.display = 'none';
+    showToast("Cảm ơn quý khách đã ủng hộ!");
+}
+function downloadInvoice() {
+    const invoice = document.getElementById('invoice-capture');
+    
+    // Sử dụng html2canvas để chụp vùng hóa đơn
+    html2canvas(invoice, {
+        backgroundColor: "#ffffff",
+        scale: 2 // Tăng độ nét cho ảnh
+    }).then(canvas => {
+        // Tạo một đường dẫn tải xuống
+        const link = document.createElement('a');
+        link.download = 'Hoa-Don-Hang-Son.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        
+        showToast("Đã tải hóa đơn về máy!");
+    });
+}
+function closeInvoice() {
+    document.getElementById('invoice-modal').style.display = 'none';
+}
+function showCategory(category) {
+    const grid = document.getElementById('productsGrid');
+
+    let filteredProducts = [];
+
+    if (category === 'all') {
+        filteredProducts = products;
+    } else {
+        filteredProducts = products.filter(p => p.category === category);
+    }
+
+    grid.innerHTML = filteredProducts.map(p => `
+        <div class="product-card">
+            <img src="${p.image}" class="product-image" onclick="showProductDetail(${p.id})" style="cursor:pointer">
+            <div class="product-info">
+                <div class="product-name" onclick="showProductDetail(${p.id})" style="cursor:pointer">${p.name}</div>
+                 ${p.description  ? `<div class="product-description">${p.description}</div>`  : ''}
+                <div class="product-price">${p.price.toLocaleString()} VNĐ</div>
+                <button class="btn-add-cart" onclick="addToCart( ${p.id}, '${p.name}', ${p.price})">
+                    Thêm vào giỏ
+                </button>
+            </div>
+        </div>
+    `).join('');
+
+    updateActiveMenu(category);
+}
+
+function searchProduct() {
+    const keyword = document.getElementById("searchInput").value.toLowerCase().trim();
+    const grid = document.getElementById("productsGrid");
+
+    const filteredProducts = products.filter(p =>
+        p.name.toLowerCase().includes(keyword)
+    );
+
+    if (filteredProducts.length === 0) {
+        grid.innerHTML = `<p style="text-align:center; width:100%;">Không tìm thấy sản phẩm</p>`;
+        return;
+    }
+
+    grid.innerHTML = filteredProducts.map(p => `
+        <div class="product-card">
+            <img src="${p.image}" class="product-image" onclick="showProductDetail(${p.id})" style="cursor:pointer">
+            <div class="product-info">
+                <div class="product-name" onclick="showProductDetail(${p.id})" style="cursor:pointer">${p.name}</div>
+                <div class="product-price">${p.price.toLocaleString()} VNĐ</div>
+                <button class="btn-add-cart"
+                    onclick="addToCart(${p.id}, '${p.name}', ${p.price})">
+                    Thêm vào giỏ
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+ //Hàm hiển thị Modal
+function showProductDetail(id) {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+
+    const modal = document.getElementById("productModal");
+    const modalBody = document.getElementById("modalBody");
+
+    modalBody.innerHTML = `
+        <img src="${product.image}" style="width:100%; border-radius:8px;">
+        <h2>${product.name}</h2>
+        <p style="color: #e74c3c; font-weight: bold; font-size: 20px;">
+            ${product.price.toLocaleString()} VNĐ
+        </p>
+        <p>${product.description || 'Không có mô tả cho món ăn này.'}</p>
+        <button class="btn-add-cart" onclick="addToCart(${product.id}, '${product.name}', ${product.price})">
+            Thêm vào giỏ hàng
+        </button>
+    `;
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("productModal").style.display = "none";
+}
+
+
+  
+function renderAuthButtons() {
+    const authSection = document.getElementById('auth-section');
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const username = localStorage.getItem('username');
+
+    if (isLoggedIn === 'true') {
+        // Nếu ĐÃ đăng nhập: Hiện tên user và nút Đăng xuất
+        authSection.innerHTML = `
+            <span class="user-info">👤 ${username}</span>
+            <button onclick="handleLogout()" class="auth-btn logout">Đăng xuất</button>
+        `;
+    } else {
+        // Nếu CHƯA đăng nhập: Hiện nút Đăng nhập
+        authSection.innerHTML = `
+            <button onclick="goToLogin()" class="auth-btn login">Đăng nhập</button>
+        `;
+    }
+}
+
+// Hàm chuyển hướng sang trang đăng nhập
+function goToLogin() {
+    window.location.href = 'login.html';
+}
+
+// Hàm xử lý đăng xuất có xác nhận
+function handleLogout() {
+    const confirmBox = confirm("Bạn có chắc chắn muốn đăng xuất không?");
+    if (confirmBox) {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('username');
+        window.location.reload(); // Tải lại trang để hiện nút Đăng nhập
+    }
+}
+
+// Chạy hàm ngay khi trang web tải xong
+document.addEventListener('DOMContentLoaded', renderAuthButtons);
+

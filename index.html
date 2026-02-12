@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="app/app.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chả Cá Hàng Sơn - Cửa Hàng Trực Tuyến</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="icon" type="image/jpg" href="images/logo.jpg">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="navbar-brand" onclick="location.reload()" style="cursor:pointer;">
+        
+        <h1><img src="images/tải xuống.png" alt="Logo" class="navbar-logo">Chả Cá Hàng Sơn</h1>
+        </div>
+        <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Tìm tên món ăn..." onkeyup="searchProduct()">
+    <span class="search-icon">🔍</span>
+</div>  
+      <div class="navbar-right">
+    <div id="auth-section" style="display: flex; align-items: center; gap: 15px;">
+        </div>
+
+    <div class="cart-icon" onclick="openCart()">
+        🛍️ <span class="cart-count" id="cartCount">0</span>
+    </div>
+</div>
+    </div>
+
+    <!-- Menu -->
+    <div class="menu">
+        <div class="menu-container">
+    <a class="menu-item active" onclick="showCategory('all')">🏠 Trang Chủ</a>
+    <a class="menu-item" onclick="showCategory('khai vi')">Khai vị</a>
+    <a class="menu-item" onclick="showCategory('mon chinh')">Món Chính</a>
+    <a class="menu-item" onclick="showCategory('lau')">Lẩu cá</a>
+    <a class="menu-item" onclick="showCategory('menu')">Menu trẻ em</a>
+    <a class="menu-item" onclick="showCategory('do uong')">Đồ Uống</a>
+    <a class="menu-item" onclick="showCategory('trang mieng')">Tráng miệng</a>
+    <a class="menu-item" onclick="showCategory('do uong co con')">Đồ uống có cồn</a>
+    <a class="menu-item" onclick="showCategory('combo')">Combo tiết kiệm</a>
+       
+</div>
+
+
+
+    <!-- Banner -->
+    <div class="banner">
+        <h2>Chào Mừng Đến Chả Cá Hàng Sơn</h2>
+        <p>CHẢ CÁ HÀ THÀNH CHUẨN VỊ TRUYỀN THỐNG
+
+            
+        </p>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <h2 class="section-title">🔥 Sản Phẩm Đặc Biệt</h2>
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <!-- Modal Giỏ Hàng -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">📦 Giỏ Hàng Của Tôi</div>
+            <div id="cartItems"></div>
+            <div class="modal-footer">
+                <div class="total-price" id="totalPrice">Tổng: 0 VNĐ</div>
+                <button class="btn-checkout" onclick="checkout()">Thanh Toán</button>
+                <button class="btn-close-modal" onclick="closeCart()">Đóng</button>
+            </div>
+        </div>
+    </div>
+<div id="toast-container"></div>
+
+<div id="invoice-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 99999; justify-content: center; align-items: center; flex-direction: column;">
+    
+    <div id="invoice-capture" style="background: white; padding: 30px; border-radius: 4px; width: 350px; color: black; font-family: 'Courier New', Courier, monospace; box-shadow: 0 0 20px rgba(0,0,0,0.2);">
+        <h2 style="text-align: center; margin-bottom: 5px; color: #8B4513;">CHẢ CÁ HÀNG SƠN</h2>
+        <p style="text-align: center; font-size: 12px; margin-bottom: 10px;">HÓA ĐƠN THANH TOÁN</p>
+        <p style="text-align: center; font-size: 10px;" id="invoice-date"></p>
+        <div style="border-top: 1px dashed #000; margin: 10px 0;"></div>
+        
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <thead>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <th style="text-align: left;">Món</th>
+                    <th style="text-align: center;">SL</th>
+                    <th style="text-align: right;">Tiền</th>
+                </tr>
+            </thead>
+            <tbody id="invoice-items-list">
+                </tbody>
+        </table>
+        
+        <div style="border-top: 1px dashed #000; margin: 10px 0;"></div>
+        <h3 id="invoice-total-display" style="text-align: right; font-size: 20px; color: #e74c3c;"></h3>
+        <p style="text-align: center; font-size: 10px; margin-top: 20px;">Cảm ơn quý khách! Hẹn gặp lại.</p>
+    </div>
+
+    <div style="margin-top: 20px; display: flex; gap: 10px; width: 350px;">
+        <button onclick="downloadInvoice()" style="flex: 1; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+             LƯU ẢNH
+        </button>
+        <button onclick="closeInvoice()" style="flex: 1; padding: 12px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+            ĐÓNG
+        </button>
+    </div>
+</div>
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <div id="modalBody">
+            </div>
+    </div>
+</div>
+ <!-- Liên Hệ -->
+  <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h3>📞 Liên hệ</h3>
+            <p><strong>Hotline:</strong> 0904432518</p>
+            <p><strong>Địa chỉ:</strong> 15 Trần Hưng Đạo, Hoàn Kiếm, Hà Nội</p>
+
+        </div>
+        <div class="footer-section">
+            <h3>🌐 Mạng xã hội</h3>
+            <div class="social-links">
+                <a href="https://www.facebook.com/van.hai.648227" target="_blank" class="social-item fb">Facebook</a>
+                <a href="https://zalo.me/0904432518" target="_blank" class="social-item zl">Zalo</a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>⏰ Giờ mở cửa</h3>
+            <p>10:00 - 22:00 (Hàng ngày)</p>
+        </div>
+    </div>
+</footer>
+
+<div class="contact-buttons">
+    <a href="tel:0904432518" class="contact-btn call-btn" title="Gọi ngay">
+        <span class="icon">📞</span>
+    </a>
+
+    <a href="https://zalo.me/0904432518" target="_blank" class="contact-btn zalo-btn" title="Chat Zalo">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo">
+    </a>
+    <a href="https://m.me/van.hai.648227" target="_blank" class="contact-btn messenger-btn" title="Chat Messenger">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Facebook_Messenger_logo_2020.svg" alt="Messenger">
+    </a>
+</div>
+</body>
+</html>
